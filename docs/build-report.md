@@ -2,13 +2,13 @@
 
 | network | file | size | limit | ok |
 |---|---|---|---|---|
-| applovin | `applovin.html` | 1.45 MB | 5 MB | yes |
-| unity | `unity.html` | 1.45 MB | 5 MB | yes |
-| ironsource | `ironsource.html` | 1.45 MB | 5 MB | yes |
-| mintegral | `mintegral.html` | 1.45 MB | 5 MB | yes |
-| google | `google.zip` | 1.04 MB | 5 MB | yes |
-| meta | `meta.html` | 1.45 MB | 2 MB | yes |
-| preview | `preview.html` | 1.45 MB | 5 MB | yes |
+| applovin | `applovin.html` | 1.82 MB | 5 MB | yes |
+| unity | `unity.html` | 1.82 MB | 5 MB | yes |
+| ironsource | `ironsource.html` | 1.82 MB | 5 MB | yes |
+| mintegral | `mintegral.html` | 1.82 MB | 5 MB | yes |
+| google | `google.zip` | 1.32 MB | 5 MB | yes |
+| meta | `meta.html` | 1.82 MB | 2 MB | yes |
+| preview | `preview.html` | 1.82 MB | 5 MB | yes |
 
 ## Textures (source PNG → shipped WebP at the drawn size)
 
@@ -41,7 +41,7 @@
 | **total** | **19.74 MB** | **949 KB** | |
 
 Code: 120 KB inline (no external libraries).
-Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
+Audio clips: loop, drop, epic, strike, 287 KB mp3 (base64 inline, 382 KB in the file).
 
 
 ---
@@ -50,13 +50,13 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 
 | network | file | size | limit | ok |
 |---|---|---|---|---|
-| applovin | `applovin.html` | 1.45 MB | 5 MB | yes |
-| unity | `unity.html` | 1.45 MB | 5 MB | yes |
-| ironsource | `ironsource.html` | 1.46 MB | 5 MB | yes |
-| mintegral | `mintegral.html` | 1.45 MB | 5 MB | yes |
-| google | `google.zip` | 1.04 MB | 5 MB | yes |
-| meta | `meta.html` | 1.45 MB | 2 MB | yes |
-| preview | `preview.html` | 1.45 MB | 5 MB | yes |
+| applovin | `applovin.html` | 1.82 MB | 5 MB | yes |
+| unity | `unity.html` | 1.82 MB | 5 MB | yes |
+| ironsource | `ironsource.html` | 1.82 MB | 5 MB | yes |
+| mintegral | `mintegral.html` | 1.82 MB | 5 MB | yes |
+| google | `google.zip` | 1.32 MB | 5 MB | yes |
+| meta | `meta.html` | 1.82 MB | 2 MB | yes |
+| preview | `preview.html` | 1.82 MB | 5 MB | yes |
 
 ## Textures (source PNG → shipped WebP at the drawn size)
 
@@ -89,7 +89,7 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 | **total** | **19.74 MB** | **949 KB** | |
 
 Code: 120 KB inline (no external libraries).
-Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
+Audio clips: loop, drop, epic, strike, 287 KB mp3 (base64 inline, 382 KB in the file).
 
 
 ---
@@ -98,13 +98,13 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 
 | network | file | size | limit | ok |
 |---|---|---|---|---|
-| applovin | `applovin.html` | 1.45 MB | 5 MB | yes |
-| unity | `unity.html` | 1.45 MB | 5 MB | yes |
-| ironsource | `ironsource.html` | 1.45 MB | 5 MB | yes |
-| mintegral | `mintegral.html` | 1.45 MB | 5 MB | yes |
-| google | `google.zip` | 1.04 MB | 5 MB | yes |
-| meta | `meta.html` | 1.45 MB | 2 MB | yes |
-| preview | `preview.html` | 1.45 MB | 5 MB | yes |
+| applovin | `applovin.html` | 1.82 MB | 5 MB | yes |
+| unity | `unity.html` | 1.82 MB | 5 MB | yes |
+| ironsource | `ironsource.html` | 1.82 MB | 5 MB | yes |
+| mintegral | `mintegral.html` | 1.82 MB | 5 MB | yes |
+| google | `google.zip` | 1.32 MB | 5 MB | yes |
+| meta | `meta.html` | 1.82 MB | 2 MB | yes |
+| preview | `preview.html` | 1.82 MB | 5 MB | yes |
 
 ## Textures (source PNG → shipped WebP at the drawn size)
 
@@ -137,4 +137,4 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 | **total** | **19.74 MB** | **949 KB** | |
 
 Code: 120 KB inline (no external libraries).
-Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
+Audio clips: loop, drop, epic, strike, 287 KB mp3 (base64 inline, 382 KB in the file).
