@@ -1,0 +1,4 @@
+Use case: a treasure heap for the end card of a slot-machine mobile ad, a single wide sprite.
+Subject: a heap of glossy gold coins (some with a lightning-bolt emblem) with cut gemstones scattered in it (sapphire blue, emerald green, amethyst purple, ruby red, amber), a golden goblet leaning on the right side and a few coins rolling at the foot, the heap wide and low and flat at the bottom, bright specular highlights, warm light from the upper right. The very bottom edge is a flat straight horizontal cut (the heap sits on a ledge later).
+Composition: landscape 3:2, the heap centred, about 90% of the canvas width, on a flat solid pure magenta #FF00FF background.
+Constraints: no text, no letters, no digits, no shadow on the background, no glow outside the heap's own outline. Original design.

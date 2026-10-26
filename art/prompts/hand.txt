@@ -1,0 +1,4 @@
+Use case: the tutorial pointer hand for a mobile playable ad, a single sprite.
+Subject: a stylised glossy cartoon hand in a white glove with a short golden cuff at the wrist, the index finger pointing straight UP, the other fingers curled, soft clean shading in white and light grey-blue, thick soft outline-free toy-like forms. The fingertip is at the top centre of the image.
+Composition: square 1:1, one hand, upright, centred horizontally, filling about 85% of the canvas height, on a flat solid pure magenta #FF00FF background.
+Constraints: no text, no motion lines, no shadow on the background, no glow outside the hand's own outline. Original design.

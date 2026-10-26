@@ -1,0 +1,4 @@
+Use case: a gold coin sprite for a coin fountain in a slot-machine mobile ad, seen straight from the front.
+Subject: one shiny gold coin with a thick raised rim, fine beaded edge, and a bold embossed lightning bolt in the centre, bright specular highlights, warm amber shading, slightly worn glossy metal.
+Composition: square 1:1, the coin centred and filling about 90% of the width, on a flat solid pure magenta #FF00FF background.
+Constraints: no text, no letters, no digits, no shadow on the background, no glow outside the coin's own outline. Original design.

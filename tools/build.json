@@ -1,0 +1,105 @@
+{
+  "title": "Гром Олимпа — Амброзия",
+  "store": {
+    "android": "https://example.com/register",
+    "ios": "https://example.com/register"
+  },
+  "textures": {
+    "bg_day": [
+      1280,
+      "lossy"
+    ],
+    "bg_storm": [
+      1280,
+      "lossy"
+    ],
+    "zeus": [
+      1000,
+      "alpha"
+    ],
+    "zeus_triumph": [
+      1000,
+      "alpha"
+    ],
+    "zeus_w": [
+      512,
+      "lossless"
+    ],
+    "frame": [
+      1100,
+      "alpha"
+    ],
+    "btn_spin": [
+      300,
+      "alpha"
+    ],
+    "coin": [
+      96,
+      "alpha"
+    ],
+    "hand": [
+      260,
+      "alpha"
+    ],
+    "scatter": [
+      190,
+      "alpha"
+    ],
+    "treasure": [
+      720,
+      "alpha"
+    ],
+    "g_blue": [
+      160,
+      "alpha"
+    ],
+    "g_green": [
+      160,
+      "alpha"
+    ],
+    "g_purple": [
+      160,
+      "alpha"
+    ],
+    "g_yellow": [
+      160,
+      "alpha"
+    ],
+    "g_red": [
+      160,
+      "alpha"
+    ],
+    "s_cup": [
+      160,
+      "alpha"
+    ],
+    "s_amph": [
+      160,
+      "alpha"
+    ],
+    "s_lyre": [
+      160,
+      "alpha"
+    ],
+    "s_helm": [
+      160,
+      "alpha"
+    ],
+    "orb_green": [
+      170,
+      "alpha"
+    ],
+    "orb_blue": [
+      170,
+      "alpha"
+    ],
+    "orb_purple": [
+      170,
+      "alpha"
+    ],
+    "orb_red": [
+      170,
+      "alpha"
+    ]
+  }
+}

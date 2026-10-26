@@ -1,0 +1,4 @@
+Use case: the SCATTER symbol of a slot-machine mobile playable ad, a single sprite.
+Subject: a round golden medallion with a thick ornate gold rim, a deep indigo-blue enamel disc and a large bright white-blue lightning bolt across its centre, a laurel wreath ring inside the rim, tiny golden wings at both sides. Glossy, crisp, strong silhouette, readable at small size, the same rendering style as the style reference. The upper area of the disc is slightly brighter.
+Composition: square 1:1, the medallion centred and filling about 80% of the width, on a flat solid pure magenta #FF00FF background.
+Constraints: no text, no letters, no digits, no shadow on the background, no glow or halo outside the object's own outline. Original design.

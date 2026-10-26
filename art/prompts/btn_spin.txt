@@ -1,0 +1,4 @@
+Use case: the round SPIN button of a slot-machine mobile playable ad, a single sprite, seen straight from the front.
+Subject: a large round glossy button: a thick polished gold outer ring with a fine bevel, a recessed dark plum-purple inner disc, and on the disc two thick curved golden arrows chasing each other in a circle (the universal "spin/refresh" icon, each arrow head clearly visible), warm gold highlights, soft inner shadow. The arrows are perfectly rotationally symmetric around the centre of the button.
+Composition: square 1:1, the button perfectly centred and filling about 90% of the width, on a flat solid pure magenta #FF00FF background.
+Constraints: no text, no letters, no hand, no shadow on the background, no glow outside the button's own outline. Original design.
