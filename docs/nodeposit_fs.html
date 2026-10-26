@@ -1168,8 +1168,8 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
     sfxSoft = ac.createGain(); sfxSoft.connect(shelf); shelf.connect(lp); lp.connect(sfx);                    // synthesized effects go through here; the thunder sample goes straight to sfx
     musicLP = ac.createBiquadFilter(); musicLP.type = 'lowpass'; musicLP.frequency.value = 3200; musicLP.Q.value = 0.4;
     musicBus = ac.createGain(); musicBus.gain.value = 0.7; musicBus.connect(musicLP); musicLP.connect(out);
-    for (const k in MUSIC) { const p = window.MUSIC_B64 && window.MUSIC_B64[k] ? Promise.resolve(Uint8Array.from(atob(window.MUSIC_B64[k]), (c) => c.charCodeAt(0)).buffer) : fetch(MUSIC[k]).then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(r.status))));
-      p.then((ab) => new Promise((res, rej) => ac.decodeAudioData(ab, res, rej))).then((b) => { buf[k] = b; }).catch((e) => console.warn('music', k, e && e.message)); }
+    for (const k in MUSIC) { const p = window.MUSIC_B64 && window.MUSIC_B64[k] ? Promise.resolve(Uint8Array.from(atob(window.MUSIC_B64[k]), (c) => c.charCodeAt(0)).buffer) : (window.__STATIC__ ? Promise.reject(new Error('not in this build')) : fetch(MUSIC[k]).then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(r.status)))));
+      p.then((ab) => new Promise((res, rej) => ac.decodeAudioData(ab, res, rej))).then((b) => { buf[k] = b; }).catch((e) => { if (!window.__STATIC__) console.warn('music', k, e && e.message); }); }
   };
   addEventListener('pointerdown', start, { capture: true }); addEventListener('keydown', start, { capture: true });
   const noise = () => { if (nbuf) return nbuf; nbuf = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const d = nbuf.getChannelData(0); let s = 12345; for (let i = 0; i < d.length; i++) { s = (s * 16807) % 2147483647; d[i] = (s / 2147483647) * 2 - 1; } return nbuf; };

@@ -40,8 +40,8 @@
 | orb_red | 193 KB | 11.3 KB | 156×170 |
 | **total** | **19.74 MB** | **949 KB** | |
 
-Code: 118 KB inline (no external libraries).
-Audio: 1 clips (3 music + the thunder sample), 12 KB mp3 (base64 inline, 16 KB in the file).
+Code: 119 KB inline (no external libraries).
+Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 
 
 ---
@@ -88,8 +88,8 @@ Audio: 1 clips (3 music + the thunder sample), 12 KB mp3 (base64 inline, 16 KB i
 | orb_red | 193 KB | 11.3 KB | 156×170 |
 | **total** | **19.74 MB** | **949 KB** | |
 
-Code: 118 KB inline (no external libraries).
-Audio: 1 clips (3 music + the thunder sample), 12 KB mp3 (base64 inline, 16 KB in the file).
+Code: 119 KB inline (no external libraries).
+Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 
 
 ---
@@ -136,5 +136,5 @@ Audio: 1 clips (3 music + the thunder sample), 12 KB mp3 (base64 inline, 16 KB i
 | orb_red | 193 KB | 11.3 KB | 156×170 |
 | **total** | **19.74 MB** | **949 KB** | |
 
-Code: 118 KB inline (no external libraries).
-Audio: 1 clips (3 music + the thunder sample), 12 KB mp3 (base64 inline, 16 KB in the file).
+Code: 119 KB inline (no external libraries).
+Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
