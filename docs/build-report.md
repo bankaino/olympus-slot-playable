@@ -40,7 +40,7 @@
 | orb_red | 193 KB | 11.3 KB | 156×170 |
 | **total** | **19.74 MB** | **949 KB** | |
 
-Code: 119 KB inline (no external libraries).
+Code: 120 KB inline (no external libraries).
 Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 
 
@@ -52,7 +52,7 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 |---|---|---|---|---|
 | applovin | `applovin.html` | 1.45 MB | 5 MB | yes |
 | unity | `unity.html` | 1.45 MB | 5 MB | yes |
-| ironsource | `ironsource.html` | 1.45 MB | 5 MB | yes |
+| ironsource | `ironsource.html` | 1.46 MB | 5 MB | yes |
 | mintegral | `mintegral.html` | 1.45 MB | 5 MB | yes |
 | google | `google.zip` | 1.04 MB | 5 MB | yes |
 | meta | `meta.html` | 1.45 MB | 2 MB | yes |
@@ -88,7 +88,7 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 | orb_red | 193 KB | 11.3 KB | 156×170 |
 | **total** | **19.74 MB** | **949 KB** | |
 
-Code: 119 KB inline (no external libraries).
+Code: 120 KB inline (no external libraries).
 Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 
 
@@ -136,5 +136,5 @@ Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).
 | orb_red | 193 KB | 11.3 KB | 156×170 |
 | **total** | **19.74 MB** | **949 KB** | |
 
-Code: 119 KB inline (no external libraries).
+Code: 120 KB inline (no external libraries).
 Audio clips: strike, 12 KB mp3 (base64 inline, 16 KB in the file).

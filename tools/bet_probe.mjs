@@ -20,6 +20,9 @@ await tap(LAY.bet.plus, LAY.bet.y); await tap(LAY.bet.plus, LAY.bet.y); await ta
 await tap(LAY.spin.x, LAY.spin.y - 300);
 for (let i = 0; i < 80 && (await st()).phase !== 'ready'; i++) await p.waitForTimeout(150);
 out.push(['after spin 2', await st()]);
+// a tap just beside a stake button (outside its 150 px hit zone, inside the dead margin) must change nothing: no stake change, no spin
+{ const before = await st(); await tap(LAY.bet.plus + 75 + 20, LAY.bet.y); const near = await st(); await tap(LAY.bet.plus + 105 + 25, LAY.bet.y, 200); const far = await st();
+  console.log('tap 20 px beside +  (dead margin):'.padEnd(42), near.spins === before.spins && near.bet === before.bet ? 'ignored OK' : 'MISTAKE: ' + JSON.stringify(near)); console.log('tap 25 px past the margin (anywhere):'.padEnd(42), far.spins === before.spins + 1 ? 'spin started OK' : 'no spin: ' + JSON.stringify(far)); }
 for (const [n, s] of out) console.log(n.padEnd(42), JSON.stringify(s));
 const last = (await st()), want = Math.round(1.75 * last.bets[1]); console.log('spin 2 win', last.wins[1], 'want 1.75 × bet', last.bets[1], '=', want, last.wins[1] === want ? 'OK' : 'MISMATCH', '| errors', errs.length ? errs : 'none');
 await b.close();

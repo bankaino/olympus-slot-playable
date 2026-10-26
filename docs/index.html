@@ -628,7 +628,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
     BET: 100, BETS: [20, 40, 100, 200, 400, 1000], BALANCE0: 5000, SEED: 7, SCRIPT_ID: 'classic4', OFFER: 'deposit', CTA_BAR: false,
     PAY: { s_helm: [10, 20, 50], s_lyre: [3, 10, 25], s_amph: [2, 6, 15], s_cup: [1.5, 3, 12], g_red: [1, 2, 10], g_purple: [0.8, 1.5, 8], g_yellow: [0.5, 1, 5], g_green: [0.4, 0.8, 4], g_blue: [0.3, 0.75, 2] },
     T: { slam: 0.4, out: 0.2, in: 0.45, inCol: 0.05, inRow: 0.02, hilite: 0.3, burst: 0.2, fall: 0.35, strike: 0.7, strike1: 1.1, tail: 0.5, nice: 0.8, charge: 0.5, settle: 0.25, titleDur: 1.1, bigHold: 0.9 },
-    TURBO: 1.4, SKIP_AFTER: 2.2, HAND_IDLE: 2.5, TITLE_X: [20, 100, 300], END_AFTER_WIN: 0.3, END_IDLE: 1e9, END_NO_INPUT: 1e9, SKIP_HOLD: 1.5,
+    CTA_FULLSCREEN: false, TURBO: 1.4, SKIP_AFTER: 2.2, HAND_IDLE: 2.5, TITLE_X: [20, 100, 300], END_AFTER_WIN: 0.3, END_IDLE: 1e9, END_NO_INPUT: 1e9, SKIP_HOLD: 1.5,
   };
   const SCRIPTS = {
     classic4: [
@@ -648,7 +648,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
   const LAY = (() => { const extra = Math.max(0, VIEW.H - 1920), k = 1072 / FR.w, yF = Math.round(520 + extra * 0.6), cell = 136, gw = cell * COLS, gh = cell * ROWS;
     const gx = Math.round(VIEW.W / 2 - gw / 2), gy = Math.round(yF + FR.y0 * k + ((FR.y1 - FR.y0) * k - gh) / 2), fh = FR.h * k, panelY = Math.round(yF + fh + 8);
     const zh = Math.round(1200 + 0.2 * extra), zk = zh / ZS.h, zw = ZS.w * zk, zx = 640 - zw / 2, zy = Math.round(95 + 0.3 * extra);
-    return { cell, gx, gy, gw, gh, frame: { x: (VIEW.W - FR.w * k) / 2, y: yF, w: FR.w * k, h: fh, k, plate: [(VIEW.W - FR.w * k) / 2 + FR.plate[0] * k, yF + FR.plate[1] * k] }, panelY, spin: { x: 720, y: panelY + 150, r: 118 }, bet: { y: panelY + 150, minus: 502, plus: 938, r: 50 },
+    return { cell, gx, gy, gw, gh, frame: { x: (VIEW.W - FR.w * k) / 2, y: yF, w: FR.w * k, h: fh, k, plate: [(VIEW.W - FR.w * k) / 2 + FR.plate[0] * k, yF + FR.plate[1] * k] }, panelY, spin: { x: 720, y: panelY + 150, r: 118 }, bet: { y: panelY + 150, minus: 502, plus: 938, r: 56 },
       zeus: { x: zx, y: zy, w: zw, h: zh, k: zk, hand: [zx + ZS.hand[0] * zk, zy + ZS.hand[1] * zk] }, medal: { x: 150, y: yF - 230 } }; })();
   const rng = (seed) => { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
   const shuffle = (a, rg) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rg() * (i + 1)); const x = a[i]; a[i] = a[j]; a[j] = x; } return a; };
@@ -942,7 +942,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
   const fmt = (n) => String(Math.max(0, Math.round(n))).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   const GOLD0 = hex('#F5C542'), GOLD1 = hex('#B9771E'), GOLDL = hex('#FFF1A8'), PLUM0 = hex('#3A1236'), PLUM1 = hex('#24081F'), ICE = [0.6, 0.85, 1];
   const deco = (fn) => { const n0 = L.UI.length; fn(); L.UI.length = n0; };            // art stand-ins and transient FX are not HUD: keep them out of the QA overlap list
-  S.hit = [];
+  S.hit = []; S.dead = [];
   const CELL = LAY.cell, cellXY = (c, r) => [LAY.gx + c * CELL, LAY.gy + r * CELL];
   const tw = (n) => G.tex(n);
   const spr = (n, cx, cy, o = {}) => { const w = o.w || Z[n][0], h = w * tw(n).h / tw(n).w, sx = o.sx === undefined ? 1 : o.sx, sy = o.sy === undefined ? sx : o.sy;
@@ -995,9 +995,9 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
     { const z = LAY.zeus, ps = pose(ST, GT), br = 1 + 0.008 * Math.sin(GT * 1.6), stormTint = [0.55, 0.65, 1, 0.22 * st];
       L.glow(z.x + z.w * 0.45 + ox, z.y + z.h * 0.22 + oy, 520, lerp3([1, 0.75, 0.4], [0.5, 0.65, 1], st), 0.28 + 0.2 * (triumph ? 1 : 0), 2.2);
       if (triumph && has('zeus_triumph')) {                                          // second pose: both arms up; lands with the white flash, head just above the frame
-        const q = SS(0, 0.22, ph === 'big' ? ST.pt : 9), kt = 0.64 * (0.94 + 0.06 * q), w2 = tw('zeus_triumph').w * kt, h2 = tw('zeus_triumph').h * kt, x2 = W / 2 - w2 / 2 + 12, y2 = 20 + (h2 * 0 );
+        const q = SS(0, 0.22, ph === 'big' ? ST.pt : 9), asp = tw('zeus_triumph').w / tw('zeus_triumph').h, y2 = 14, hc = LAY.frame.y - 80, h2 = (hc - y2) / 0.43 * (0.94 + 0.06 * q), w2 = h2 * asp, x2 = W / 2 - w2 / 2 + 12 * (w2 / 700), edge = w2 < W * 1.02 ? 0.14 : 0.03;   // the head centre sits at 43 % of the sprite: it lands just above the frame on every phone height
         rays(x2 + w2 * 0.5 + ox, y2 + h2 * 0.43 + oy, 0.1 * q * (ph === 'big' || ph === 'over' ? 1 : 0.6), GT);
-        L.sprite('zeus_triumph', x2 + ox, y2 + oy, { w: w2, h: h2, pad: 0.02, u: { alpha: q, tint: stormTint, bulge: [0.5, 0.45, 0.28, 0.012 * Math.sin(GT * 2)] } });
+        L.sprite('zeus_triumph', x2 + ox, y2 + oy, { w: w2, h: h2, pad: 0.02, u: { alpha: q, fade: [edge, edge], vfade: 0.05, tint: stormTint, bulge: [0.5, 0.45, 0.28, 0.012 * Math.sin(GT * 2)] } });
         if (ph === 'big' && ST.pt < 0.25) L.solid(0, 0, W, H, [1, 1, 1], 0, 0, 0, 0.6 * (1 - ST.pt / 0.25));
         for (const [fx, fy] of [[0.23, 0.02], [0.8, 0.02]]) L.glow(x2 + w2 * fx + ox, y2 + h2 * fy + oy + 40, 180, ICE, 0.4 + 0.2 * Math.sin(GT * 30 + fx * 9), 2.2); }
       else {
@@ -1005,7 +1005,6 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
           bone0: [RB[0][0] / RIG.w, RB[0][1] / RIG.h, ps.a0, 1], bone1: [RB[1][0] / RIG.w, RB[1][1] / RIG.h, ps.a1, 1], bone2: [RB[2][0] / RIG.w, RB[2][1] / RIG.h, ps.a2, 1], wtex: G.tex('zeus_w'), wsz: [RIG.w, RIG.h] } });
         const eL = zeusPt([362, 303], [0.78, 0, 1], ps, ox, oy), eR = zeusPt([432, 290], [0.78, 0, 1], ps, ox, oy), hd = zeusPt([900, 400], [0.45, 1, 0], ps, ox, oy);
         if (ps.eyes > 0.05) for (const e of [eL, eR]) { L.glow(e[0], e[1], 15 + 12 * ps.eyes, [0.6, 0.85, 1], 0.7 * ps.eyes, 2.6); L.star(e[0], e[1], 10 + 12 * ps.eyes, [0.85, 0.95, 1], 0.8 * ps.eyes); }
-        G.blend('add'); for (let j = 0; j < 2; j++) { const k = Math.floor(GT * 14) + j * 7, an = -1.4 + (rnd(k, 2) - 0.5) * 1.8; segment([hd[0], hd[1] - 20], [hd[0] + Math.cos(an) * 70, hd[1] - 20 + Math.sin(an) * 90], 3, [1, 1, 1], 0.7 * (0.4 + 0.6 * rnd(k, 5))); } G.blend();
         L.glow(hd[0], hd[1] - 80, 90, ICE, 0.35 + 0.15 * Math.sin(GT * 22), 2.4); } }
     if (st > 0.3) { const H0 = LAY.frame.y + 70; G.blend('add'); for (let i = 0; i < 70; i++) { const sp = 1300 + 500 * rnd(i, 1), x = ((rnd(i, 2) * (W + 400) - GT * 140 * (0.6 + rnd(i, 3))) % (W + 400) + W + 400) % (W + 400) - 100, y = ((rnd(i, 4) * H0 + GT * sp) % H0);
       L.solid(x, y, 2.4, 46 + 40 * rnd(i, 5), [0.7, 0.85, 1], 0.18, 0, 0, 0.16 * st); } G.blend(); }
@@ -1047,12 +1046,17 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
     if (ph === 'slam') L.solid(0, 0, W, H, [1, 1, 1], 0, 0, 0, 0.55 * (1 - SS(0, 1, ST.pt / K.T.slam)) * SS(0, 0.08, ST.pt));
     const hand = (() => { const ps = pose(ST, GT); return zeusPt([900, 330], [0.45, 1, 0], ps, ox, oy); })();
     for (const e of ST.ev) { const a = GT - e.t; if (a < 0) continue;
-      if (e.k === 'win' && a < 0.9) { let sx = 0, sy = 0; for (const [c, r] of e.cells) { sx += cellXY(c, r)[0] + CELL / 2; sy += cellXY(c, r)[1] + CELL / 2; } sx /= e.cells.length; sy /= e.cells.length;
-        const q = a / 0.9; deco(() => label('winpop', '+' + fmt(e.pay) + ' ₽', sx + ox, sy + oy - 60 * ease(q), { size: Math.round(84 * (a < 0.12 ? 0.6 + 3.3 * a : 1)), ink: 'hot', al: 0.5, a: 1 - SS(0.7, 1, q) })); }
+      if (e.k === 'win' && a < 0.9) { let sx = 0, topY = 1e9; for (const [c, r] of e.cells) { sx += cellXY(c, r)[0] + CELL / 2; topY = Math.min(topY, cellXY(c, r)[1]); } sx /= e.cells.length;
+        const q = a / 0.9, py = Math.max(LAY.gy + 40, topY - 6) - 46 * ease(q); deco(() => label('winpop', '+' + fmt(e.pay) + ' ₽', sx + ox, py + oy, { size: Math.round(64 * (a < 0.12 ? 0.6 + 3.3 * a : 1)), ink: 'hot', al: 0.5, a: 1 - SS(0.7, 1, q) })); }
       if (e.k === 'burst' && a < 0.55) { const q = a / 0.55, win = (ST.plan && ST.plan.groups[e.step]) || [];
-        for (const g of win) for (const [c, r] of g.cells) { const [x, y] = cc(c, r); L.ring(x, y, 40 + 100 * ease(q), 40 + 100 * ease(q), [1, 0.8, 0.3], 0.55 * (1 - q), 0.14);
-          for (let j = 0; j < 5; j++) { const an = j * 1.2566 + rnd(c, r) * 6, d = 20 + 130 * ease(q); L.star(x + Math.cos(an) * d, y + Math.sin(an) * d, 20 * (1 - 0.5 * q), [1, 0.82, 0.3], 1 - q); }
-          G.blend('add'); for (let j = 0; j < 2; j++) { const k = Math.floor(GT * 24) + j; const an = rnd(c + k, r + j) * 6.28; segment([x, y], [x + Math.cos(an) * 90 * ease(q), y + Math.sin(an) * 90 * ease(q)], 3, [1, 0.9, 0.5], 0.8 * (1 - q)); } G.blend(); } }
+        for (const g of win) { let gx = 0, gy = 0;
+          for (const [c, r] of g.cells) { const [x, y] = cc(c, r); gx += x; gy += y;
+            if (a < 0.14) L.glow(x, y, 96, [1, 0.88, 0.45], 0.85 * (1 - a / 0.14), 2.2);                          // the flash where the symbol pops
+            G.blend('add');
+            for (let j = 0; j < 2; j++) { const sd = c * 17 + r * 5 + j * 3, an = rnd(sd, 1) * 6.283, v = 500 + 400 * rnd(sd, 2), len = 16 + 14 * rnd(sd, 3), vx = Math.cos(an) * v, vy = Math.sin(an) * v + 1200 * a, vl = Math.hypot(vx, vy) || 1,
+                px = x + Math.cos(an) * v * a, py = y + Math.sin(an) * v * a + 600 * a * a; segment([px - vx / vl * len, py - vy / vl * len], [px, py], 3.5, [1, 0.86, 0.45], 0.9 * (1 - q)); }
+            G.blend(); }
+          gx /= g.cells.length; gy /= g.cells.length; L.ring(gx, gy, 80 + 300 * ease(q), 80 + 300 * ease(q), [1, 0.8, 0.3], 0.3 * (1 - q), 0.1); } }
       if (e.k === 'strike' && a < 0.4) { const [x, y] = cellXY(e.c, e.r), fl = 1 - a / 0.4; bolt(hand[0], hand[1], x + CELL / 2 + ox, y + CELL / 2 + oy, Math.floor(GT * 20) * 3, 7, fl, 2); L.glow(x + CELL / 2, y + CELL / 2, 260, ICE, fl, 2); if (a < 0.08) L.solid(0, 0, W, H, [1, 1, 1], 0, 0, 0, 0.3 * (1 - a / 0.08)); }
       if (e.k === 'slam' && a < 0.45) for (let j = 0; j < 4; j++) bolt(hand[0], hand[1], LAY.gx + (j + 0.6) * LAY.gw / 4, LAY.gy + LAY.gh * (0.25 + 0.17 * j), Math.floor(GT * 20) * 5 + j * 11, 8, 1 - a / 0.45, 2);
       if (e.k === 'mult' && a < 0.6) { const [x, y] = cellXY(e.c, e.r), q = ease(a / 0.6), fx = lerp(x + CELL / 2, LAY.medal.x, q), fy = lerp(y + CELL / 2, LAY.medal.y, q) - 90 * Math.sin(Math.PI * q);
@@ -1066,7 +1070,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
         spr('coin', lerp(x0, x1, u), lerp(y0, y1, u) - 170 * Math.sin(Math.PI * u) * (0.6 + 0.4 * rnd(j, 7)), { w: 54, sx: Math.cos(q * 18 + j), sy: 1, a: 1 - SS(0.9, 1, q) }); } }
     if (bigDimOn(ph, endc)) L.solid(0, 0, W, H, [0.02, 0.0, 0.06], 0, 0, 0, endc ? 0.0 : 0.38 * SS(0, 0.5, ph === 'big' ? ST.pt : 1));
     L.finish(t, SK.grade);
-    S.hit = [];
+    S.hit = []; S.dead = [];                                                       // dead = a margin around the stake buttons: a tap that just misses them must not start a spin
     if (!(endc && SK.end.layout === 'card')) {
       const bigNow = ph === 'big' || ph === 'over';
       if (!bigNow) { const lw0 = labelW('brand', 'ГРОМ ОЛИМПА', { size: 46, title: true }), pw0 = lw0 + 150, px0 = 34, py0 = 30;
@@ -1094,7 +1098,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
         for (const [id, cx, dir] of [['bet-', bt.minus, -1], ['bet+', bt.plus, 1]]) { const lim = dir < 0 ? ST.betIdx <= 0 : ST.betIdx >= K.BETS.length - 1 || K.BETS[ST.betIdx + 1] > ST.money, on = can && !lim, r = bt.r * kp;
           rr(cx - r - 5, bt.y - r - 5, 2 * r + 10, 2 * r + 10, r + 5, on ? GOLD0 : [0.4, 0.3, 0.3], on ? GOLD1 : [0.25, 0.18, 0.2]); rr(cx - r, bt.y - r, 2 * r, 2 * r, r, [0.30, 0.09, 0.40], [0.14, 0.04, 0.24]);
           const a = on ? 1 : 0.35, th = 9, ln = 44 * kp; L.solid(cx - ln / 2, bt.y - th / 2, ln, th, GOLDL, 0, 0, 0, a); if (dir > 0) L.solid(cx - th / 2, bt.y - ln / 2, th, ln, GOLDL, 0, 0, 0, a);
-          S.hit.push({ id, x: cx - 58, y: bt.y - 58, w: 116, h: 116 }); } }
+          S.hit.push({ id, x: cx - 75, y: bt.y - 75, w: 150, h: 150 }); S.dead.push({ x: cx - 105, y: bt.y - 105, w: 210, h: 210 }); } }
       const sp = LAY.spin, ready = ph === 'ready' && !endc, slamReady = ready && ST.charge >= 4, spinning = !ready && !endc, pul = 1 + (ready ? SK.cta.pulse * Math.sin(t * 5) : 0);
       if (slamReady) L.glow(sp.x, sp.y, sp.r * 1.9, [1, 0.8, 0.3], 0.4 + 0.2 * Math.sin(t * 8), 2.2);
       for (let i = 0; i < 4; i++) { const an = -Math.PI * (0.8 - i * 0.2), rx = sp.x + Math.cos(an) * (sp.r + 62), ry = sp.y + Math.sin(an) * (sp.r + 62), on = i < ST.charge;
@@ -1127,7 +1131,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
       for (let i = 0; i < 10; i++) L.glow(W * rnd(i + 40, 1), H * rnd(i + 40, 2), 100 + 140 * rnd(i + 40, 3), [1, 0.8, 0.3], 0.14 * k, 2.2);
       const zt = SS(0.1, 0.6, a), zw = 520, zh2 = zw * tw('zeus_triumph').h / tw('zeus_triumph').w;
       L.glow(W / 2, 360 + oy2, 420, [1, 0.8, 0.4], 0.35 * zt, 2.2); rays(W / 2, 430 + oy2, 0.07 * zt, GT);
-      L.sprite('zeus_triumph', W / 2 - zw / 2 + 8, 100 + oy2 - 50 * (1 - zt) + 5 * Math.sin(t * 1.5), { w: zw, h: zh2, u: { alpha: zt } });
+      L.sprite('zeus_triumph', W / 2 - zw / 2 + 8, 100 + oy2 - 50 * (1 - zt) + 5 * Math.sin(t * 1.5), { w: zw, h: zh2, u: { alpha: zt, fade: [0.14, 0.14], vfade: 0.05 } });
       const win = ST.endWhy === 'win', head = win ? 'ЭПИЧЕСКИЙ ВЫИГРЫШ!' : ST.endWhy === 'passive' ? 'ИСПЫТАЙ УДАЧУ ОЛИМПА' : 'ЗЕВС ЖДЁТ ТЕБЯ!', s1 = pop(0.2), hy = 905 + oy2;
       if (s1 > 0.01) { const hh = win ? 250 : 130; rr(56, hy - 62, W - 112, hh + 8, 50, GOLD0, GOLD1, k); rr(60, hy - 58, W - 120, hh, 46, [0.30, 0.09, 0.40], [0.14, 0.04, 0.24], 0.97 * k);
         label('head2', head, W / 2, hy, { size: Math.round(60 * s1), ink: 'hot', al: 0.5, title: true }); if (win) L.text(fmt(ST.spinWin) + ' ₽', W / 2, hy + 112, 112 * s1, 0.5); }
@@ -1139,9 +1143,9 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
       if (s3 > 0.01) { L.glow(W / 2, 1610 + oy2, 480, [0.3, 0.9, 0.5], 0.28 * k, 2.2); rr(bx, by2 + 14, bw3, bh3, 0.5, SK.cta.endBase[0], SK.cta.endBase[1]); rr(bx - 7, by2 - 7, bw3 + 14, bh3 + 14, 0.5, GOLD0, GOLD1); rr(bx, by2, bw3, bh3, 0.5, SK.cta.end[0], SK.cta.end[1]);
         { const gx0 = bx + bh3 * 0.35, gw0 = bw3 - bh3 * 0.7, ph0 = ((t * 0.5) % 1.6); G.clip(gx0, by2, gw0, bh3); G.blend('add'); L.solid(gx0 - 160 + ph0 * (gw0 + 320), by2 - 20, 70, bh3 + 40, [1, 1, 1], 0.35, 0, 0, 0.28 * k); G.blend(); G.clip(); }
         label('endcta', 'ЗАРЕГИСТРИРОВАТЬСЯ', W / 2, by2 + bh3 / 2, { size: Math.round(58 * s3), ink: 'ctaEnd', al: 0.5 }); S.hit.push({ id: 'cta', x: bx, y: by2, w: bw3, h: bh3 }); }
-      if (a > 1.0) { const rw = 340, ry = 1778 + oy2, q = SS(1.0, 1.4, a); rr(W / 2 - rw / 2, ry - 36, rw, 72, 0.5, SK.end.plate[0], SK.end.plate[1], 0.85 * q);
-        label('replay', 'ЕЩЁ РАЗ', W / 2, ry, { size: 40, ink: 'plateText', al: 0.5, a: q }); S.hit.unshift({ id: 'replay', x: W / 2 - rw / 2 - 20, y: ry - 46, w: rw + 40, h: 92 }); }
-      if (a > 0.6) S.hit.push({ id: 'cta', x: 0, y: 0, w: W, h: H });
+      if (a > 1.0) { const rw = 380, ry = 1776 + oy2, q = SS(1.0, 1.4, a); rr(W / 2 - rw / 2, ry - 42, rw, 84, 0.5, SK.end.plate[0], SK.end.plate[1], 0.85 * q);
+        label('replay', 'ЕЩЁ РАЗ', W / 2, ry, { size: 40, ink: 'plateText', al: 0.5, a: q }); S.hit.unshift({ id: 'replay', x: W / 2 - 220, y: ry - 62, w: 440, h: 124 }); }
+      if (a > 0.6 && K.CTA_FULLSCREEN) S.hit.push({ id: 'cta', x: 0, y: 0, w: W, h: H });
     }
   };
   const lerp3 = (a, b, w) => [lerp(a[0], b[0], w), lerp(a[1], b[1], w), lerp(a[2], b[2], w)];
@@ -1161,7 +1165,8 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
   const start = () => {
     if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
     const C = window.AudioContext || window.webkitAudioContext; if (!C) return;
-    ac = new C(); const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 12; comp.ratio.value = 4; comp.attack.value = 0.004; comp.release.value = 0.2;
+    ac = new C(); { const ub = ac.createBuffer(1, 1, 22050), us = ac.createBufferSource(); us.buffer = ub; us.connect(ac.destination); us.start(0); }   // silent blip: unlocks iOS
+    const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 12; comp.ratio.value = 4; comp.attack.value = 0.004; comp.release.value = 0.2;
     out = ac.createGain(); out.gain.value = muted ? 0 : 0.8; out.connect(comp); comp.connect(ac.destination);
     sfx = ac.createGain(); sfx.gain.value = 0.9; sfx.connect(out);
     const shelf = ac.createBiquadFilter(); shelf.type = 'highshelf'; shelf.frequency.value = 3500; shelf.gain.value = -4; const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 9000; lp.Q.value = 0.7;
@@ -1171,7 +1176,7 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
     for (const k in MUSIC) { const p = window.MUSIC_B64 && window.MUSIC_B64[k] ? Promise.resolve(Uint8Array.from(atob(window.MUSIC_B64[k]), (c) => c.charCodeAt(0)).buffer) : (window.__STATIC__ ? Promise.reject(new Error('not in this build')) : fetch(MUSIC[k]).then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(r.status)))));
       p.then((ab) => new Promise((res, rej) => ac.decodeAudioData(ab, res, rej))).then((b) => { buf[k] = b; }).catch((e) => { if (!window.__STATIC__) console.warn('music', k, e && e.message); }); }
   };
-  addEventListener('pointerdown', start, { capture: true }); addEventListener('keydown', start, { capture: true });
+  for (const ev of ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown']) addEventListener(ev, start, { capture: true });   // on touch screens only the release counts as the user's activation
   const noise = () => { if (nbuf) return nbuf; nbuf = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const d = nbuf.getChannelData(0); let s = 12345; for (let i = 0; i < d.length; i++) { s = (s * 16807) % 2147483647; d[i] = (s / 2147483647) * 2 - 1; } return nbuf; };
   const env = (node, t0, a, peak, dur, dest) => { const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.linearRampToValueAtTime(peak, t0 + a); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur); node.connect(g); g.connect(dest || sfxSoft); return g; };
   const tone = (freq, t0, dur, type = 'sine', peak = 0.2, slide = 0, a = 0.005) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(freq, t0); if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(20, freq * slide), t0 + dur); env(o, t0, a, peak, dur); o.start(t0); o.stop(t0 + dur + 0.05); };
@@ -1222,10 +1227,11 @@ void main(){ vec4 c = texture(u_tex, v_uv); o = vec4(c.rgb * u_tint.rgb, c.a) * 
     info: () => ({ mode, loaded: Object.keys(buf), state: ac && ac.state, playing: Object.keys(cur) }),
     level: () => (an ? (an.getByteTimeDomainData(anBuf), Math.max.apply(null, Array.from(anBuf).map((v) => Math.abs(v - 128))) / 128) : 0),          // debug/QA: peak of the master bus
     tick: (S) => {
-      if (!ac || !S) return; const now = ac.currentTime;
+      if (!ac || !S) return; if (ac.state !== 'running') { ac.resume().catch(() => {}); return; }      // not unlocked yet: schedule nothing (and keep `last`, so that only fresh events play once it is)
+      const now = ac.currentTime;
       if (S.t < last) { stopAll(now); started = false; mode = ''; lastBig = -1; }                              // restart / replay: the loop starts over
       if (!started && S.firstIn >= 0 && ac.state === 'running') { musicTo('loop', now, 0.5); started = !!mode; }
-      for (const e of S.ev) { if (e.t <= last) continue;
+      for (const e of S.ev) { if (e.t <= last || S.t - e.t > 0.6) continue;
         if (SFX[e.k]) SFX[e.k](now, e);
         if (e.k === 'slam') musicTo('drop', now, 0.03);
         else if (e.k === 'bigstart') musicTo('epic', now, 0.03);
@@ -1295,6 +1301,7 @@ const load = (src) => new Promise((res, rej) => { const s = document.createEleme
   const hitAt = (x, y) => (SCENE.hit || []).find((b) => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
   addEventListener('pointerdown', (e) => { toView(e);
     const b = hitAt(ptr.x, ptr.y);
+    if (!b && (SCENE.dead || []).some((d) => ptr.x >= d.x && ptr.x <= d.x + d.w && ptr.y >= d.y && ptr.y <= d.y + d.h)) return;   // a tap just beside the stake buttons does nothing
     if (b && b.id === 'cta') { (window.__openStore || (() => console.log('CTA → store')))(); return; }
     if (b && b.id === 'replay') { play = SIM.spawn(simT); acc = 0; return; }
     if (b && (b.id === 'bet+' || b.id === 'bet-')) { if (!play) { play = SIM.spawn(simT); hint.style.opacity = 0; } pend.bet = b.id === 'bet+' ? 1 : -1; return; }   // the stake buttons never start a spin

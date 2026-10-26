@@ -11,7 +11,8 @@
   const start = () => {
     if (ac) { if (ac.state === 'suspended') ac.resume(); return; }
     const C = window.AudioContext || window.webkitAudioContext; if (!C) return;
-    ac = new C(); const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 12; comp.ratio.value = 4; comp.attack.value = 0.004; comp.release.value = 0.2;
+    ac = new C(); { const ub = ac.createBuffer(1, 1, 22050), us = ac.createBufferSource(); us.buffer = ub; us.connect(ac.destination); us.start(0); }   // silent blip: unlocks iOS
+    const comp = ac.createDynamicsCompressor(); comp.threshold.value = -14; comp.knee.value = 12; comp.ratio.value = 4; comp.attack.value = 0.004; comp.release.value = 0.2;
     out = ac.createGain(); out.gain.value = muted ? 0 : 0.8; out.connect(comp); comp.connect(ac.destination);
     sfx = ac.createGain(); sfx.gain.value = 0.9; sfx.connect(out);
     const shelf = ac.createBiquadFilter(); shelf.type = 'highshelf'; shelf.frequency.value = 3500; shelf.gain.value = -4; const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 9000; lp.Q.value = 0.7;
@@ -21,7 +22,7 @@
     for (const k in MUSIC) { const p = window.MUSIC_B64 && window.MUSIC_B64[k] ? Promise.resolve(Uint8Array.from(atob(window.MUSIC_B64[k]), (c) => c.charCodeAt(0)).buffer) : (window.__STATIC__ ? Promise.reject(new Error('not in this build')) : fetch(MUSIC[k]).then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(r.status)))));
       p.then((ab) => new Promise((res, rej) => ac.decodeAudioData(ab, res, rej))).then((b) => { buf[k] = b; }).catch((e) => { if (!window.__STATIC__) console.warn('music', k, e && e.message); }); }
   };
-  addEventListener('pointerdown', start, { capture: true }); addEventListener('keydown', start, { capture: true });
+  for (const ev of ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown']) addEventListener(ev, start, { capture: true });   // on touch screens only the release counts as the user's activation
   const noise = () => { if (nbuf) return nbuf; nbuf = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate); const d = nbuf.getChannelData(0); let s = 12345; for (let i = 0; i < d.length; i++) { s = (s * 16807) % 2147483647; d[i] = (s / 2147483647) * 2 - 1; } return nbuf; };
   const env = (node, t0, a, peak, dur, dest) => { const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.linearRampToValueAtTime(peak, t0 + a); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur); node.connect(g); g.connect(dest || sfxSoft); return g; };
   const tone = (freq, t0, dur, type = 'sine', peak = 0.2, slide = 0, a = 0.005) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(freq, t0); if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(20, freq * slide), t0 + dur); env(o, t0, a, peak, dur); o.start(t0); o.stop(t0 + dur + 0.05); };
@@ -76,10 +77,11 @@
     info: () => ({ mode, loaded: Object.keys(buf), state: ac && ac.state, playing: Object.keys(cur) }),
     level: () => (an ? (an.getByteTimeDomainData(anBuf), Math.max.apply(null, Array.from(anBuf).map((v) => Math.abs(v - 128))) / 128) : 0),          // debug/QA: peak of the master bus
     tick: (S) => {
-      if (!ac || !S) return; const now = ac.currentTime;
+      if (!ac || !S) return; if (ac.state !== 'running') { ac.resume().catch(() => {}); return; }      // not unlocked yet: schedule nothing (and keep `last`, so that only fresh events play once it is)
+      const now = ac.currentTime;
       if (S.t < last) { stopAll(now); started = false; mode = ''; lastBig = -1; }                              // restart / replay: the loop starts over
       if (!started && S.firstIn >= 0 && ac.state === 'running') { musicTo('loop', now, 0.5); started = !!mode; }
-      for (const e of S.ev) { if (e.t <= last) continue;
+      for (const e of S.ev) { if (e.t <= last || S.t - e.t > 0.6) continue;
         if (SFX[e.k]) SFX[e.k](now, e);
         if (e.k === 'slam') musicTo('drop', now, 0.03);
         else if (e.k === 'bigstart') musicTo('epic', now, 0.03);

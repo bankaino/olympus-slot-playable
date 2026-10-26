@@ -12,7 +12,7 @@
     // pay anywhere: stake multiples for 8-9 / 10-11 / 12+ identical symbols
     PAY: { s_helm: [10, 20, 50], s_lyre: [3, 10, 25], s_amph: [2, 6, 15], s_cup: [1.5, 3, 12], g_red: [1, 2, 10], g_purple: [0.8, 1.5, 8], g_yellow: [0.5, 1, 5], g_green: [0.4, 0.8, 4], g_blue: [0.3, 0.75, 2] },
     T: { slam: 0.4, out: 0.2, in: 0.45, inCol: 0.05, inRow: 0.02, hilite: 0.3, burst: 0.2, fall: 0.35, strike: 0.7, strike1: 1.1, tail: 0.5, nice: 0.8, charge: 0.5, settle: 0.25, titleDur: 1.1, bigHold: 0.9 },
-    TURBO: 1.4, SKIP_AFTER: 2.2, HAND_IDLE: 2.5, TITLE_X: [20, 100, 300], END_AFTER_WIN: 0.3, END_IDLE: 1e9, END_NO_INPUT: 1e9, SKIP_HOLD: 1.5,
+    CTA_FULLSCREEN: false, TURBO: 1.4, SKIP_AFTER: 2.2, HAND_IDLE: 2.5, TITLE_X: [20, 100, 300], END_AFTER_WIN: 0.3, END_IDLE: 1e9, END_NO_INPUT: 1e9, SKIP_HOLD: 1.5,
   };
   // scripted spins: wins = [[symbol, count]] per cascade step, orbs = [[step the orb lands on the board, value]], expect = the spin's total
   const SCRIPTS = {
@@ -36,7 +36,7 @@
   const LAY = (() => { const extra = Math.max(0, VIEW.H - 1920), k = 1072 / FR.w, yF = Math.round(520 + extra * 0.6), cell = 136, gw = cell * COLS, gh = cell * ROWS;
     const gx = Math.round(VIEW.W / 2 - gw / 2), gy = Math.round(yF + FR.y0 * k + ((FR.y1 - FR.y0) * k - gh) / 2), fh = FR.h * k, panelY = Math.round(yF + fh + 8);
     const zh = Math.round(1200 + 0.2 * extra), zk = zh / ZS.h, zw = ZS.w * zk, zx = 640 - zw / 2, zy = Math.round(95 + 0.3 * extra);
-    return { cell, gx, gy, gw, gh, frame: { x: (VIEW.W - FR.w * k) / 2, y: yF, w: FR.w * k, h: fh, k, plate: [(VIEW.W - FR.w * k) / 2 + FR.plate[0] * k, yF + FR.plate[1] * k] }, panelY, spin: { x: 720, y: panelY + 150, r: 118 }, bet: { y: panelY + 150, minus: 502, plus: 938, r: 50 },
+    return { cell, gx, gy, gw, gh, frame: { x: (VIEW.W - FR.w * k) / 2, y: yF, w: FR.w * k, h: fh, k, plate: [(VIEW.W - FR.w * k) / 2 + FR.plate[0] * k, yF + FR.plate[1] * k] }, panelY, spin: { x: 720, y: panelY + 150, r: 118 }, bet: { y: panelY + 150, minus: 502, plus: 938, r: 56 },
       zeus: { x: zx, y: zy, w: zw, h: zh, k: zk, hand: [zx + ZS.hand[0] * zk, zy + ZS.hand[1] * zk] }, medal: { x: 150, y: yF - 230 } }; })();
 
   // ---------------- rng, pay table, cascade engine ----------------

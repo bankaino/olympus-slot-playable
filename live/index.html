@@ -70,6 +70,7 @@ const load = (src) => new Promise((res, rej) => { const s = document.createEleme
   const hitAt = (x, y) => (SCENE.hit || []).find((b) => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h);
   addEventListener('pointerdown', (e) => { toView(e);
     const b = hitAt(ptr.x, ptr.y);
+    if (!b && (SCENE.dead || []).some((d) => ptr.x >= d.x && ptr.x <= d.x + d.w && ptr.y >= d.y && ptr.y <= d.y + d.h)) return;   // a tap just beside the stake buttons does nothing
     if (b && b.id === 'cta') { (window.__openStore || (() => console.log('CTA → store')))(); return; }
     if (b && b.id === 'replay') { play = SIM.spawn(simT); acc = 0; return; }
     if (b && (b.id === 'bet+' || b.id === 'bet-')) { if (!play) { play = SIM.spawn(simT); hint.style.opacity = 0; } pend.bet = b.id === 'bet+' ? 1 : -1; return; }   // the stake buttons never start a spin
